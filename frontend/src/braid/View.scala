@@ -62,7 +62,7 @@ object View {
         className := "px-4 py-4 text-center",
         span(
           className := "inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-orange-100 text-orange-700",
-          "🔥 (streak here)"
+          s"🔥 ${habit.streak}"
         )
       ),
       last7Days.map((date) =>

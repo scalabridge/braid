@@ -8,9 +8,9 @@ object Braid {
   def run(mount: dom.Element): Unit = {
     val model =
       Seq(
-        Habit("Work on Braid"),
-        Habit("Exercise"),
-        Habit("Read")
+        Habit("Work on Braid", 0),
+        Habit("Exercise", 5),
+        Habit("Read", 3)
       )
 
     val app = View.view(model)
