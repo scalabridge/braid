@@ -12,7 +12,7 @@ object Braid {
       Seq(
         Habit("Work on Braid", 0, Seq()),
         Habit("Exercise", 5, Seq()),
-        Habit("Read", 3, Seq(new js.Date(js.Date.parse("21-10-2025"))))
+        Habit("Read", 3, Seq(new js.Date(js.Date.now())))
       )
 
     val app = View.view(model)

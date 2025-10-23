@@ -73,20 +73,23 @@ object View {
           s"🔥 ${habit.streak}"
         )
       ),
-      last7Days.map( (date: js.Date) =>
+      last7Days.map((date: js.Date) =>
         td(
           className := "px-3 py-4 text-center",
-          if (habit.dates.contains(date)) {
-            div("F")
-          } else {
-            div("")
+          habit.dates.find(d =>
+            d.getFullYear() == date.getFullYear() &&
+              d.getUTCMonth() == date.getUTCMonth() &&
+              d.getUTCDate() == date.getUTCDate()
+          ) match {
+            case Some(_) => strong("Yes")
+            case None    => "No"
           }
-        )),
-        td(
-          className := "px-3 py-4 text-center",
-          button(className := s"w-8 h-8 rounded-lg transition")
         )
-      ,
+      ),
+      td(
+        className := "px-3 py-4 text-center",
+        button(className := s"w-8 h-8 rounded-lg transition")
+      ),
       td(
         className := "px-4 py-4 text-center",
         button(
