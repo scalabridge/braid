@@ -17,6 +17,7 @@ val munitVersion = "1.1.1"
 commands += Command.command("build") { state =>
   "clean" ::
     "compile" ::
+    "fastLinkJS" ::
     "test" ::
     "scalafixAll" ::
     "scalafmtAll" ::
