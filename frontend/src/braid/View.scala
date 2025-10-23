@@ -8,14 +8,29 @@ import scala.scalajs.js
 
 object View {
   def last7Days: Seq[js.Date] = {
-      val today = new js.Date(js.Date.now())
-      for (i <- 7 to 0) yield {
-        val date = new js.Date()
-        date.setDate(today.getDate() - i)
-        date
-      }
+    val today = new js.Date(js.Date.now())
+    for (i <- -6 to 0) yield {
+      val date = new js.Date()
+      date.setDate(today.getDate() + i)
+      date
+    }
   }
-    
+
+  def last7DaysTableHeadings: Seq[Element] =
+    last7Days.zipWithIndex
+      .map { (date, i) =>
+        th(
+          className := "px-3 py-4 text-center text-sm font-semibold text-gray-700",
+          div(
+            date.toLocaleDateString(),
+            div(
+              className := "text-xs font-normal text-gray-500",
+              date.getDate()
+            )
+          )
+        )
+      }
+
   def view(habits: Seq[Habit]): Div =
     div(
       className := "bg-white rounded-lg shadow-lg overflow-hidden",
@@ -34,18 +49,7 @@ object View {
                 className := "px-4 py-4 text-center text-sm font-semibold text-gray-700",
                 "Streak"
               ),
-              last7Days.zipWithIndex.map((date, i) =>
-                th(
-                  className := "px-3 py-4 text-center text-sm font-semibold text-gray-700",
-                  div(
-                    date.toLocaleDateString(),
-                    div(
-                      className := "text-xs font-normal text-gray-500",
-                      date.getDate()
-                    )
-                  )
-                )
-              ),
+              last7DaysTableHeadings,
               th(className := "px-4 py-4")
             )
           ),
