@@ -1,12 +1,14 @@
 package braid
 
-import braid.model.Habit
 import com.raquo.laminar.api.L.{_, given}
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 import scala.scalajs.js
 
+final case class Habit(name: String, streak: Int, dates: Seq[js.Date])
+
 object View {
+
   def last7Days: Seq[js.Date] = {
     val today = new js.Date(js.Date.now())
     for (i <- -6 to 0) yield {
@@ -16,13 +18,15 @@ object View {
     }
   }
 
+  val daysOfTheWeek = Seq("Sun", "Mon", "Tue", "Wed", "Thue", "Fri", "Sat")
+
   def last7DaysTableHeadings: Seq[Element] =
     last7Days.zipWithIndex
       .map { (date, i) =>
         th(
           className := "px-3 py-4 text-center text-sm font-semibold text-gray-700",
           div(
-            date.toLocaleDateString(),
+            daysOfTheWeek(date.getDay().toInt),
             div(
               className := "text-xs font-normal text-gray-500",
               date.getDate()
@@ -69,12 +73,20 @@ object View {
           s"🔥 ${habit.streak}"
         )
       ),
-      last7Days.map((date) =>
+      last7Days.map( (date: js.Date) =>
+        td(
+          className := "px-3 py-4 text-center",
+          if (habit.dates.contains(date)) {
+            div("F")
+          } else {
+            div("")
+          }
+        )),
         td(
           className := "px-3 py-4 text-center",
           button(className := s"w-8 h-8 rounded-lg transition")
         )
-      ),
+      ,
       td(
         className := "px-4 py-4 text-center",
         button(
